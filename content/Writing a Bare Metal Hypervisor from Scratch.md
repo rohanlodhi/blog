@@ -145,3 +145,4 @@ registers, program counter, exception status, and PSTATE flags) into a kernel ma
 17 eret() # Exception return, resumes guest
 ```
 
+With this, we have a functioning hypervisor. We need to build our rust code with the linker so that it loads the boot stub at the right address.
