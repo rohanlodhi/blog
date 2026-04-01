@@ -48,7 +48,7 @@ The stub performs the following tasks:
 Before we can actually execute the hypervisor code written in rust, we need more assembly code that sets up a runtime since the rust standard library is absent in our low level environment. The assembly portion handles stack setup, while the Rust code immediately establishes foundational runtime infrastructure that all subsequent
 code depends on.
 
-Traditionally, the loader is responsible for clearing the .bss region of the memory. Binary String Section (.bss) is the region of the executable where all uninitialised static variables are declared. The linker defines a `__bss_start` and a `__bss_end region` and our assembly code is responsible for clearing it to zero by iterating over it. This is done to ensure past variables do not remain in a new run. 
+Traditionally, the loader is responsible for clearing the .bss region of the memory. Block Started by Symbol (.bss) is the region of the executable where all uninitialised static variables are declared. The linker defines a `__bss_start` and a `__bss_end region` and our assembly code is responsible for clearing it to zero by iterating over it. This is done to ensure past variables do not remain in a new run. 
 
 The assembly code also makes sure the stack pointer points to the top of a preallocated stack region defined in the linker script and allocated in the data segment. 
 
@@ -145,4 +145,6 @@ registers, program counter, exception status, and PSTATE flags) into a kernel ma
 17 eret() # Exception return, resumes guest
 ```
 
-With this, we have a functioning hypervisor. We need to build our rust code with the linker so that it loads the boot stub at the right address.
+With this, we have a functioning hypervisor. We need to build our rust code with the linker so that it loads the boot stub at the right address. 
+
+The next part of this series is to make a distributed system of hypervisors to build a fault tolerant system. [[Distributed Hypervisor]]
